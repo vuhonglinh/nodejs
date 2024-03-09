@@ -17,6 +17,19 @@ const {
   deleteCustomerArrApi,
 } = require("../controllers/customerController.js");
 
+const {
+  createProjectApi,
+  getProjectsApi,
+  updateProjectApi,
+  deleteProjectApi,
+} = require("../controllers/projectController.js");
+
+const {
+  createTaskApi,
+  getTasksApi,
+  updateTaskApi,
+  deleteTaskApi,
+} = require("../controllers/taskController.js");
 //Khai báo route 1
 routerApi.get("/users", getUsersApi);
 routerApi.post("/users", createUserApi);
@@ -31,6 +44,18 @@ routerApi.put("/customers", updateCustomerApi);
 routerApi.delete("/customers", deleteCustomerApi);
 
 routerApi.delete("/customers-many", deleteCustomerArrApi);
+
+//Khai báo projects
+routerApi.post("/projects", createProjectApi);
+routerApi.get("/projects", getProjectsApi);
+routerApi.put("/projects", updateProjectApi);
+routerApi.delete("/projects", deleteProjectApi);
+
+//Khai báo tasks
+routerApi.post("/tasks", createTaskApi);
+routerApi.get("/tasks", getTasksApi);
+routerApi.put("/tasks", updateTaskApi);
+routerApi.delete("/tasks", deleteTaskApi);
 
 routerApi.get("/info", (req, res) => {
   console.log(req.query);

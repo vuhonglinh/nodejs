@@ -3,7 +3,6 @@ const aqp = require("api-query-params");
 module.exports = {
   getAllCustomers: async (limit, page, queryString) => {
     try {
-
       if (limit && page) {
         let skip = (page - 1) * limit;
         const { filter } = aqp(queryString);

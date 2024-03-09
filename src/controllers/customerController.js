@@ -1,4 +1,5 @@
 const Customer = require("../models/customer.js");
+const Joi = require("joi");
 const { uploadSingleFileApi } = require("../services/fileService.js");
 const {
   getAllCustomers,
@@ -8,7 +9,6 @@ const {
   deleteCustomerById,
   deleteCustomerArr,
 } = require("../services/customerService.js"); //Lấy CRUD bên service
-
 
 module.exports = {
   getCustomersApi: async (req, res) => {
@@ -21,6 +21,25 @@ module.exports = {
   },
 
   createCustomerApi: async (req, res) => {
+    let { name, address, phone, email, description } = req.body;
+
+    //Validation
+    const schema = Joi.object({
+      name: Joi.string().min(3).max(30).required(),
+
+      address: Joi.string().required(),
+
+      phone: Joi.string().pattern(new RegExp("^[0-9]{8,11}$")).required(),
+
+      email: Joi.string().email().required(),
+
+      description: Joi.string().required(),
+    });
+
+    const { error } = schema.validate(req.body, { abortEarly: false });
+    if (error) {
+      return res.status(400).json({ error: error });
+    }
     let image = "";
     if (req.files && Object.keys(req.files).length > 0) {
       let fileName = await uploadSingleFileApi(req.files.image);
@@ -68,7 +87,6 @@ module.exports = {
 
   deleteCustomerArrApi: async (req, res) => {
     let data = req.body.customersId;
-    console.log(data);
     let result = await deleteCustomerArr(data);
     return res.status(201).json({
       errorCode: 0,
