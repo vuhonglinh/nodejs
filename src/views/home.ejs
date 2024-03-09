@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="topnav">
+      <a class="active" href="/">Home</a>
+      <a href="/create">Create Users</a>
+    </div>
+    <div class="table-container">
+      <div class="title">List Users</div>
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>City</th>
+          <th>Action</th>
+        </tr>
+        <% listUsers.forEach(item => { %>
+        <tr>
+          <td><%= item.id %></td>
+          <td><%= item.name %></td>
+          <td><%= item.email %></td>
+          <td><%= item.city %></td>
+          <td>
+            <a href="/update/<%= item.id %>">Edit</a>
+            <form action="/delete-user" method="POST">
+              <input type="hidden" name="id" value="<%= item.id %>" />
+              <button
+                onclick="return confirm('Bạn có muốn xóa không?')"
+                type="submit"
+              >
+                Delete
+              </button>
+            </form>
+          </td>
+        </tr>
+        <% }) %>
+      </table>
+    </div>
+  </body>
+</html>
